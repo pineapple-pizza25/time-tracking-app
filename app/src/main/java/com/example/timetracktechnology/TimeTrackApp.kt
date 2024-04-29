@@ -6,7 +6,7 @@ class TimeTrackTechnology: Application() {
     private lateinit var categoryList: ArrayList<Category>
     private lateinit var timesheetEntryList: ArrayList<TimesheetEntry>
 
-    fun OnCreate(){
+    override fun onCreate(){
         super.onCreate()
         categoryList = ArrayList<Category>()
         timesheetEntryList = ArrayList<TimesheetEntry>()

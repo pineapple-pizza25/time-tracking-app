@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".TimeTrackTechnology"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -19,16 +20,10 @@
             android:name=".BrowseTimesheetEntriesActivity"
             android:exported="false" />
         <activity
-            android:name=".BrowseCategoryActivity"
-            android:exported="false" />
-        <activity
             android:name=".CreateTimesheetEntry"
             android:exported="false" />
         <activity
             android:name=".CreateCategoryActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CreateCategory"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

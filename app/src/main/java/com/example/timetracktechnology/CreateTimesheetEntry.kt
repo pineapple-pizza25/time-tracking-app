@@ -14,7 +14,7 @@ import java.util.Date
 class CreateTimesheetEntry : AppCompatActivity() {
 
     public lateinit var selectedTime: Date;
-    val timeTrackerApp = applicationContext as TimeTrackTechnology
+    val timeTrackApp = applicationContext as TimeTrackTechnology
 
     private lateinit var tvTitle: TextView
     private lateinit var edtTitle: EditText
@@ -55,13 +55,13 @@ class CreateTimesheetEntry : AppCompatActivity() {
     }
 
     private fun addNewTimesheetEntry(startTime: Time, endTime: Time){
-        val id = timeTrackerApp.getTimesheetEntryId()
+        val id = timeTrackApp.getTimesheetEntryId()
         val title = edtTitle.text.toString().trim()
         val category = spnCategory.selectedItemId.toInt()
         val entryDate = Date()
 
         val newTimesheetEntry = TimesheetEntry(id, title, category, entryDate, startTime, endTime)
-        timeTrackerApp.addToTimesheetEntryList(newTimesheetEntry)
+        timeTrackApp.addToTimesheetEntryList(newTimesheetEntry)
     }
 
     private fun getStartTime(){

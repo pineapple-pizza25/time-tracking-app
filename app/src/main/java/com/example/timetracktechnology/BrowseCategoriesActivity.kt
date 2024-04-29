@@ -15,6 +15,8 @@ class BrowseCategoriesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_browse_categories)
 
         lvCategories = findViewById<ListView>(R.id.lvCategories)
+
+        populateListView()
     }
 
     private fun populateListView(){
