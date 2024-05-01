@@ -13,8 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Title:"
-        />
+        android:text="Title:" />
 
     <EditText
         android:id="@+id/edtTitle"
@@ -23,8 +22,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
-        android:hint="Enter Title here"
-        />
+        android:hint="Enter Title here" />
 
     <TextView
         android:id="@+id/tvCategory"
@@ -33,8 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edtTitle"
-        android:text="Please Select a Category:"
-        />
+        android:text="Please Select a Category:" />
 
     <Spinner
         android:id="@+id/spnCategory"
@@ -43,57 +40,44 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvCategory"
-        android:hint="Enter description here"
-        />
+        android:hint="Enter description here" />
 
     <TextView
-        android:id="@+id/tvStartTime"
+        android:id="@+id/tvDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spnCategory"
-        android:text="Please Select a Start Time:"
-        />
+        android:text="Click to Select a Date:"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-    <Button
-        android:id="@+id/btnStartTime"
+    <TextView
+        android:id="@+id/tvStartTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pick start time"
+        android:text="Click to Select a Start Time:"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvStartTime" />
+        tools:layout_editor_absoluteY="175dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <TextView
         android:id="@+id/tvEndTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Click to Select an End Time:"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnStartTime"
-        android:text="Please Select an End Time:"
-        />
-
-    <Button
-        android:id="@+id/btnEndTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvEndTime"
-        android:text="Pick end time" />
+        tools:layout_editor_absoluteY="243dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <Button
         android:id="@+id/btnDone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Done"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnEndTime"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteY="506dp" />
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -30,17 +30,17 @@ class CreateCategoryActivity : AppCompatActivity() {
 
             addNewCategory()
 
-            val intent = Intent(this, CreateCategoryActivity::class.java)
+            val intent = Intent(this, BrowseCategoriesActivity::class.java)
             startActivity(intent)
         }
 
         btnBrowseCategories.setOnClickListener {
-            val intent = Intent(this, CreateCategoryActivity::class.java)
+            val intent = Intent(applicationContext, BrowseCategoriesActivity::class.java)
             startActivity(intent)
         }
     }
 
-    //Gets the title and description from th edit texts and stores it in an object in the category list
+    //Gets the title and description from the edit texts and stores it in an object in the category list
     private fun addNewCategory(){
         val id = myApp.getCategoryId()
         val title = edtTitle.text.toString().trim()

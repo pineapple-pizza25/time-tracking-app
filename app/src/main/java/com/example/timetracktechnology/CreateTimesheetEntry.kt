@@ -21,9 +21,7 @@ class CreateTimesheetEntry : AppCompatActivity() {
     private lateinit var tvCategory: TextView
     private lateinit var spnCategory: Spinner
     private lateinit var tvStartTime: TextView
-    private lateinit var btnStartTime: Button
     private lateinit var tvEndTime: TextView
-    private lateinit var btnEndTime: Button
     private lateinit var btnDone: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,21 +33,24 @@ class CreateTimesheetEntry : AppCompatActivity() {
         tvCategory = findViewById<TextView>(R.id.tvCategory)
         spnCategory = findViewById<Spinner>(R.id.spnCategory)
         tvStartTime = findViewById<TextView>(R.id.tvStartTime)
-        btnStartTime = findViewById<Button>(R.id.btnStartTime)
         tvEndTime = findViewById<TextView>(R.id.tvEndTime)
-        btnEndTime = findViewById<Button>(R.id.btnEndTime)
         btnDone = findViewById<Button>(R.id.btnDone)
 
         var startTime: Date
         var endTime: Date
 
-        btnStartTime.setOnClickListener {
+        tvStartTime.setOnClickListener {
             TimePickerFragment("startTime").show(supportFragmentManager, "timePicker")
             startTime = selectedTime
         }
 
-        btnEndTime.setOnClickListener {
+        tvEndTime.setOnClickListener {
             TimePickerFragment("endTime").show(supportFragmentManager, "timePicker")
+            endTime = selectedTime
+        }
+
+        tvEndTime.setOnClickListener {
+            DatePickerFragment().show(supportFragmentManager, "datePicker")
             endTime = selectedTime
         }
     }
