@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
 
 
       // Handler().postDelayed({
-            val intent = Intent(this, CreateCategoryActivity::class.java)
+            val intent = Intent(this, CreateTimesheetEntry::class.java)
             startActivity(intent)
 
     }

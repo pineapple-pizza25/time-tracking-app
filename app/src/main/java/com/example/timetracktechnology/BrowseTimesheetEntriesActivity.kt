@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 class BrowseTimesheetEntriesActivity : AppCompatActivity() {
 
     private  lateinit var btnAddNewEntry: Button
+    private lateinit var rcvEntries: RecyclerView
+
+    private lateinit var timesheetEntryList: ArrayList<TimesheetEntry>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,22 +20,26 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity() {
 
         val myApp = application as TimeTrackTechnology
 
-        val recyclerView: RecyclerView = findViewById(R.id.rcvTimesheetEntries)
+        rcvEntries = findViewById(R.id.rcvTimesheetEntries)
         btnAddNewEntry = findViewById<Button>(R.id.btnAddNewEntry)
 
-        try {
-            val entriesAdapter = TImesheetEntriesRecyclerViewAdapter(this, myApp.getTimesheetEntryList())
-            recyclerView.adapter = entriesAdapter
-            val layoutManager = LinearLayoutManager(this)
-            recyclerView.layoutManager = layoutManager
-        }
-        catch (exc: Exception) {
-            exc.printStackTrace()
-        }
+        timesheetEntryList = myApp.getTimesheetEntryList()
 
         btnAddNewEntry.setOnClickListener {
             val intent = Intent(this, CreateTimesheetEntry::class.java)
             startActivity(intent)
+        }
+    }
+
+    private fun populateRecyclerView(){
+        try {
+            val entriesAdapter = TImesheetEntriesRecyclerViewAdapter(this, timesheetEntryList)
+            rcvEntries.adapter = entriesAdapter
+            val layoutManager = LinearLayoutManager(this)
+            rcvEntries.layoutManager = layoutManager
+        }
+        catch (exc: Exception) {
+            exc.printStackTrace()
         }
     }
 }
