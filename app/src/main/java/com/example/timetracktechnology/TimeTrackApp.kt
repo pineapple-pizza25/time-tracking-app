@@ -13,6 +13,8 @@ class TimeTrackTechnology: Application() {
         super.onCreate()
         categoryList = ArrayList<Category>()
         timesheetEntryList = ArrayList<TimesheetEntry>()
+
+        populateCatergoryListDefaults()
     }
 
     fun getCategoryList(): ArrayList<Category>{ return categoryList }
@@ -26,4 +28,9 @@ class TimeTrackTechnology: Application() {
     fun getCategoryId(): Int{return timesheetEntryList.size}
 
     fun getTimesheetEntryId(): Int{return timesheetEntryList.size}
+
+    private fun populateCatergoryListDefaults(){
+        categoryList += Category(0,"Chores","Household tasks")
+        categoryList += Category(1,"Homework","Work to do from School/College/Work")
+    }
 }

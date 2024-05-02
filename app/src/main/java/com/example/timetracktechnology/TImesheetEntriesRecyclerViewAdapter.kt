@@ -31,7 +31,7 @@ class TImesheetEntriesRecyclerViewAdapter(context: Context, private val timeshee
         position: Int
     ) {
         holder.tvTitle.setText(timesheetEntriesList.get(position).title)
-        holder.tvCategory.setText(timesheetEntriesList.get(position).categoryId)
+        holder.tvCategory.setText(timesheetEntriesList.get(position).categoryId.toString())
         holder.tvDate.setText(timesheetEntriesList.get(position).entryDate.toString())
         holder.tvStartTime.setText(timesheetEntriesList.get(position).startTime.toString())
         holder.tvEndTime.setText(timesheetEntriesList.get(position).endTime.toString())

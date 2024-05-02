@@ -20,7 +20,7 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity() {
 
         val myApp = application as TimeTrackTechnology
 
-        rcvEntries = findViewById(R.id.rcvTimesheetEntries)
+        rcvEntries = findViewById<RecyclerView>(R.id.rcvTimesheetEntries)
         btnAddNewEntry = findViewById<Button>(R.id.btnAddNewEntry)
 
         timesheetEntryList = myApp.getTimesheetEntryList()
@@ -29,6 +29,8 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity() {
             val intent = Intent(this, CreateTimesheetEntry::class.java)
             startActivity(intent)
         }
+
+        populateRecyclerView()
     }
 
     private fun populateRecyclerView(){
