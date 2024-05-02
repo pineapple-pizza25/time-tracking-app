@@ -73,7 +73,6 @@ class CreateTimesheetEntry : AppCompatActivity(), DatePickerDialog.OnDateSetList
             timeTrackApp.getCategoryList()
         )
 
-       // categoriesAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice)
         spnCategory.adapter = categoriesAdapter
 
         fun addNewTimesheetEntry(startTime: LocalTime, endTime: LocalTime, entryDate: LocalDate) {
@@ -110,8 +109,6 @@ class CreateTimesheetEntry : AppCompatActivity(), DatePickerDialog.OnDateSetList
             getDateTimeCalendar()
 
             TimePickerDialog(this, startTimeListener, hour, minute, true).show()
-
-
         }
 
         tvEndTime.setOnClickListener {
