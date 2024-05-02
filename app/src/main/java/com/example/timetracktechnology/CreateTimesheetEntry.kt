@@ -41,6 +41,7 @@ class CreateTimesheetEntry : AppCompatActivity(), DatePickerDialog.OnDateSetList
     private lateinit var tvStartTime: TextView
     private lateinit var tvEndTime: TextView
     private lateinit var btnDone: Button
+    private lateinit var tvDate: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,11 +56,12 @@ class CreateTimesheetEntry : AppCompatActivity(), DatePickerDialog.OnDateSetList
         tvEndTime = findViewById<TextView>(R.id.tvEndTime)
         btnDone = findViewById<Button>(R.id.btnDone)
         tvStartTime= findViewById<TextView>(R.id.tvStartTime)
+        tvDate = findViewById<TextView>(R.id.tvDate)
 
         var startTime: Date? = null
         var endTime: Date? = null
 
-        pickTime()
+        pickDateAndTime()
 
         val categoriesAdapter = ArrayAdapter<Category>(
             applicationContext,
@@ -92,7 +94,7 @@ class CreateTimesheetEntry : AppCompatActivity(), DatePickerDialog.OnDateSetList
     }
 
     @SuppressLint("SetTextI18n")
-    private fun pickTime() {
+    private fun pickDateAndTime() {
         tvStartTime.setOnClickListener {
             getDateTimeCalendar()
 
@@ -106,13 +108,18 @@ class CreateTimesheetEntry : AppCompatActivity(), DatePickerDialog.OnDateSetList
 
             TimePickerDialog(this, endTimeListener, hour, minute, true).show()
         }
+
+        tvDate.setOnClickListener{
+            getDateTimeCalendar()
+
+            DatePickerDialog(this, dateClickListener, year, month, day ).show()
+        }
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        TODO("Not yet implemented")
+
     }
 
-    @SuppressLint("SetTextI18n")
     private val startTimeListener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
         savedHour = hourOfDay
         savedMinute = minute
@@ -126,6 +133,16 @@ class CreateTimesheetEntry : AppCompatActivity(), DatePickerDialog.OnDateSetList
         getDateTimeCalendar()
         tvEndTime.text = String.format("%02d:%02d", savedHour, savedMinute)
     }
+
+    private val dateClickListener = DatePickerDialog.OnDateSetListener { _, day , month, year ->
+        savedDay = day
+        savedMonth = month + 1
+        savedYear = year
+        getDateTimeCalendar()
+
+        tvDate.text = String.format("%02d/%02d/%04d", savedDay, savedMonth, savedYear)
+    }
+
     private fun getDateTimeCalendar(){
         val cal: Calendar = Calendar.getInstance()
         day = cal.get(Calendar.DAY_OF_MONTH)
