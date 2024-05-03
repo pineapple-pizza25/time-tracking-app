@@ -33,53 +33,57 @@ class RegisterActivity : AppCompatActivity() {
         edtPassword = findViewById(R.id.edtPassword)
         btnRegister = findViewById(R.id.btnRegister)
 
-        btnRegister.setOnClickListener{
-            var email: String
-            var password: String
+        btnRegister.setOnClickListener {register()}
+    }
 
-            email = edtEmail.text.toString()
-            password = edtPassword.text.toString()
+    private fun register() {
+        var email: String
+        var password: String
 
-            if (TextUtils.isEmpty(email)){
-                Toast.makeText(this,
-                    "please enter a valid email address",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            else if (TextUtils.isEmpty(password)){
-                Toast.makeText(this,
-                    "please enter a password",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            else{
-                auth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success")
-                            val user = auth.currentUser
-                            Toast.makeText(
-                                baseContext,
-                                "Account Created",
-                                Toast.LENGTH_SHORT,
-                            ).show()
+        email = edtEmail.text.toString()
+        password = edtPassword.text.toString()
 
-                            val intent = Intent(this, LogInActivity::class.java)
-                            startActivity(intent)
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(
+                this,
+                "please enter a valid email address",
+                Toast.LENGTH_SHORT
+            ).show()
+        } else if (TextUtils.isEmpty(password)) {
+            Toast.makeText(
+                this,
+                "please enter a password",
+                Toast.LENGTH_SHORT
+            ).show()
+        } else {
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
 
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                            Toast.makeText(
-                                baseContext,
-                                "Authentication failed.",
-                                Toast.LENGTH_SHORT,
-                            ).show()
+                        Log.d(TAG, "createUserWithEmail:success")
+                        val user = auth.currentUser
 
-                        }
+                        Toast.makeText(
+                            baseContext,
+                            "Account Created",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+
+                        val intent = Intent(this, LogInActivity::class.java)
+                        startActivity(intent)
+
+                    } else {
+
+                        Log.w(TAG, "createUserWithEmail:failure", task.exception)
+
+                        Toast.makeText(
+                            baseContext,
+                            "Authentication failed.",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+
                     }
-            }
+                }
         }
     }
 }

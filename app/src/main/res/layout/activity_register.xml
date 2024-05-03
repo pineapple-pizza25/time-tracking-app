@@ -37,5 +37,5 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/edtPassword"
         android:layout_marginTop="24dp"
-        android:text="Login" />
+        android:text="Register" />
 </RelativeLayout>

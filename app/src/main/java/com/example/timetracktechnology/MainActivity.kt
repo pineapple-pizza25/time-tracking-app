@@ -11,7 +11,7 @@ import kotlinx.coroutines.delay
 class MainActivity : AppCompatActivity() {
 
     private lateinit var btnLogIn: Button
-    private lateinit var btnSignUp: Button
+    private lateinit var btnRegister: Button
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,10 +19,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         btnLogIn = findViewById<Button>(R.id.btnLogin)
-        btnSignUp = findViewById<Button>(R.id.btnSignUp)
+        btnRegister = findViewById<Button>(R.id.btnRegister)
 
         btnLogIn.setOnClickListener() {
             val intent = Intent(this, LogInActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnRegister.setOnClickListener(){
+            val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
 

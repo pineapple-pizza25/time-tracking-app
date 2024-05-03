@@ -33,53 +33,55 @@ class LogInActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
-        btnLogIn.setOnClickListener {
-            var email: String
-            var password: String
+        btnLogIn.setOnClickListener {logIn()}
+    }
 
-            email = edtEmail.text.toString()
-            password = edtPassword.text.toString()
+    private fun logIn(){
+        var email: String
+        var password: String
 
-            if (TextUtils.isEmpty(email)){
-                Toast.makeText(this,
-                    "please enter a valid email address",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            else if (TextUtils.isEmpty(password)){
-                Toast.makeText(this,
-                    "please enter a password",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            else{
-                auth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(ContentValues.TAG, "createUserWithEmail:success")
-                            val user = auth.currentUser
-                            Toast.makeText(
-                                baseContext,
-                                "Account Created",
-                                Toast.LENGTH_SHORT,
-                            ).show()
+        email = edtEmail.text.toString()
+        password = edtPassword.text.toString()
 
-                            val intent = Intent(this, MenuActivity::class.java)
-                            startActivity(intent)
+        if (TextUtils.isEmpty(email)){
+            Toast.makeText(this,
+                "please enter a valid email address",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        else if (TextUtils.isEmpty(password)){
+            Toast.makeText(this,
+                "please enter a password",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        else{
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        Log.d(ContentValues.TAG, "createUserWithEmail:success")
+                        val user = auth.currentUser
+                        Toast.makeText(
+                            baseContext,
+                            "Account Created",
+                            Toast.LENGTH_SHORT,
+                        ).show()
 
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(ContentValues.TAG, "createUserWithEmail:failure", task.exception)
-                            Toast.makeText(
-                                baseContext,
-                                "Authentication failed.",
-                                Toast.LENGTH_SHORT,
-                            ).show()
+                        user?.email
 
-                        }
+                        val intent = Intent(this, MenuActivity::class.java)
+                        startActivity(intent)
+
+                    } else {
+                        Log.w(ContentValues.TAG, "createUserWithEmail:failure", task.exception)
+                        Toast.makeText(
+                            baseContext,
+                            "Authentication failed.",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+
                     }
-            }
+                }
         }
     }
 }

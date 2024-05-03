@@ -5,9 +5,11 @@ import android.app.Application
 class TimeTrackTechnology: Application() {
     private lateinit var categoryList: ArrayList<Category>
     private lateinit var timesheetEntryList: ArrayList<TimesheetEntry>
-    private val minDailyGoal: Int? = null
-    private val maxDailyGoal: Int? = null
 
+    var minDailyGoal: Int? = null
+    var maxDailyGoal: Int? = null
+
+    lateinit var user: User
 
     override fun onCreate(){
         super.onCreate()
