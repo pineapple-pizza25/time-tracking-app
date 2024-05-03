@@ -1,11 +1,18 @@
 package com.example.timetracktechnology
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.net.Uri
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import java.io.ByteArrayOutputStream
+
+
 
 class TImesheetEntriesRecyclerViewAdapter(context: Context, private val timesheetEntriesList: ArrayList<TimesheetEntry>):
     RecyclerView.Adapter<TImesheetEntriesRecyclerViewAdapter.MyViewHolder>() {
@@ -39,5 +46,13 @@ class TImesheetEntriesRecyclerViewAdapter(context: Context, private val timeshee
 
     override fun getItemCount(): Int {
         return timesheetEntriesList.size
+    }
+
+    fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path =
+            MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
+        return Uri.parse(path)
     }
 }

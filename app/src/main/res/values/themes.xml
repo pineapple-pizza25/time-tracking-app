@@ -1,9 +1,89 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.TimeTrackTechnology" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Primary color -->
+        <item name="colorPrimary">@color/celeste</item>
+        <item name="colorPrimaryDark">@color/celeste</item>
+        <item name="colorAccent">@color/celeste</item>
+
+        <item name="android:windowBackground">@color/gray</item>
+
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorSecondary">@color/black</item>
+        <item name="android:textColorHint">@color/black</item>
+
     </style>
 
+
+    <style name="AppButtonStyle" >
+        <!-- Button Text Color -->
+        <item name="android:textColor">@color/black</item>
+        <!-- Background Color -->
+        <item name="android:background">@color/black</item>
+        <!-- Button Padding -->
+        <item name="android:paddingHorizontal">16dp</item>
+        <item name="android:paddingVertical">12dp</item>
+        <!-- Button Text Size -->
+        <item name="android:textSize">16sp</item>
+
+    </style>
+
+
+    <style name="myEdt">
+        <item name="boxStrokeColor">@color/black</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+    <style name="mytextView" >
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="android:lineSpacingExtra">2dp</item>
+    </style>
+
+    <style name="myHeading" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textColor">@color/celeste</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:lineSpacingExtra">2dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="mySpinner" parent="Widget.AppCompat.Spinner.Underlined">
+        <item name="android:background">@color/lightGray</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">48dp</item>
+        <item name="android:dropDownVerticalOffset">8dp</item>
+        <item name="android:dropDownWidth">wrap_content</item>
+    </style>
+
+    <style name="AppTextViewStyle" parent="Widget.AppCompat.TextView">
+        <!-- Text Color -->
+        <item name="android:textColor">@color/black</item>
+        <!-- Text Size -->
+        <item name="android:textSize">16sp</item>
+        <!-- Padding -->
+        <item name="android:padding">8dp</item>
+        <!-- Other properties as needed -->
+    </style>
+
+    <style name="AppHeadingStyle" parent="Widget.AppCompat.TextView">
+        <!-- Text Color -->
+        <item name="android:textColor">@color/black</item>
+        <!-- Text Size -->
+        <item name="android:textSize">24sp</item>
+        <!-- Padding -->
+        <item name="android:paddingBottom">8dp</item>
+        <!-- Other properties as needed -->
+    </style>
     <style name="Theme.TimeTrackTechnology" parent="Base.Theme.TimeTrackTechnology" />
 </resources>

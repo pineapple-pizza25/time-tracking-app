@@ -14,6 +14,7 @@
         android:layout_marginTop="44dp"
         android:layout_marginEnd="192dp"
         android:text="Daily Goals"
+        style="@style/myHeading"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -38,6 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Minimum Hours:"
+                style="@style/mytextView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tvMinGoal"
                 app:layout_constraintStart_toStartOf="parent"
@@ -49,6 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
+                style="@style/mytextView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tvMinGoalTitle"
@@ -78,6 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Maximum Hours"
+                style="@style/mytextView"
                 app:layout_constraintEnd_toStartOf="@id/tvMaxGoal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -89,6 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
+                style="@style/mytextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tvMaxGoalTitle"
                 app:layout_constraintTop_toTopOf="parent"
@@ -99,6 +104,7 @@
 
     <Button
         android:id="@+id/btnSetMinGoal"
+        style="@style/AppButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Daily Minimum Goal"
@@ -110,6 +116,7 @@
 
     <Button
         android:id="@+id/btnSetMaxGoal"
+        style="@style/AppButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Daily Maximum Goal"
@@ -123,6 +130,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Back"
+        style="@style/AppButtonStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSetMaxGoal"

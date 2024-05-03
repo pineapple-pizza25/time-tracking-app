@@ -10,23 +10,25 @@
         android:id="@+id/btnBrowseCategories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/AppButtonStyle"
         android:text="Browse Categories"
-        app:layout_constraintBottom_toTopOf="@id/btnBrowseCategories"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintBottom_toTopOf="@id/btnBrowseTimesheetEntries"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnBrowseTimesheetEntries"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/AppButtonStyle"
         android:text="Browse Timesheet Entries"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnBrowseTimesheetEntries"
-        tools:ignore="NotSibling" />
+        app:layout_constraintTop_toBottomOf="@id/btnBrowseCategories"
+        app:layout_constraintBottom_toTopOf="@id/btnSetDailyGoals" />
 
     <Button
         android:id="@+id/btnSetDailyGoals"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/AppButtonStyle"
         android:text="Set Daily Goals"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

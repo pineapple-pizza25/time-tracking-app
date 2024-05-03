@@ -15,6 +15,7 @@
 
     <EditText
         android:id="@+id/edtEmail"
+        style="@style/myEdt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/imageViewLogo"
@@ -24,6 +25,7 @@
 
     <EditText
         android:id="@+id/edtPassword"
+        style="@style/myEdt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/edtEmail"
@@ -33,6 +35,7 @@
 
     <Button
         android:id="@+id/btnLogin"
+        style="@style/AppButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/edtPassword"
