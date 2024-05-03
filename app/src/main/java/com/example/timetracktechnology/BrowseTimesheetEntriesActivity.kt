@@ -22,6 +22,7 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity(), DatePickerDialog.OnD
     private lateinit var tvStartDate: TextView
     private lateinit var tvEndDate: TextView
     private lateinit var btnFilter: Button
+    private lateinit var btnMenu: Button
 
     private lateinit var timesheetEntryList: ArrayList<TimesheetEntry>
     private lateinit var filteredEntryList: ArrayList<TimesheetEntry>
@@ -47,6 +48,7 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity(), DatePickerDialog.OnD
         rcvEntries = findViewById<RecyclerView>(R.id.rcvTimesheetEntries)
         btnAddNewEntry = findViewById<Button>(R.id.btnAddNewEntry)
         btnFilter = findViewById<Button>(R.id.btnFilter)
+        btnMenu = findViewById<Button>(R.id.btnMenu)
         tvStartDate = findViewById<TextView>(R.id.tvStartDate)
         tvEndDate = findViewById<TextView>(R.id.tvEndDate)
 
@@ -71,6 +73,11 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity(), DatePickerDialog.OnD
             catch (exc: Exception){
                 Toast.makeText(applicationContext, "An error occurred: ${exc.message}", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        btnMenu.setOnClickListener{
+            val intent = Intent(this, MenuActivity::class.java)
+            startActivity(intent)
         }
     }
 

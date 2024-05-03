@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1069567172279",
+    "project_id": "timetracktechnology",
+    "storage_bucket": "timetracktechnology.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1069567172279:android:4f5b4ce64a9e4d66513732",
+        "android_client_info": {
+          "package_name": "com.example.timetracktechnology"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvN-P9Z-0-M0lSnvJC24wuKlqQlum6syk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

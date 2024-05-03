@@ -1,7 +1,7 @@
 package com.example.timetracktechnology
 
 import android.annotation.SuppressLint
-import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,26 +14,26 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 
-class LogInActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity() {
 
     private lateinit var edtEmail: EditText
     private lateinit var edtPassword: EditText
-    private lateinit var btnLogIn: Button
+    private lateinit var btnRegister: Button
 
     private lateinit var auth: FirebaseAuth
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_log_in)
-
-        edtEmail = findViewById(R.id.edtEmail)
-        edtPassword = findViewById(R.id.edtPassword)
-        btnLogIn = findViewById(R.id.btnLogin)
+        setContentView(R.layout.activity_register)
 
         auth = Firebase.auth
 
-        btnLogIn.setOnClickListener {
+        edtEmail = findViewById(R.id.edtEmail)
+        edtPassword = findViewById(R.id.edtPassword)
+        btnRegister = findViewById(R.id.btnRegister)
+
+        btnRegister.setOnClickListener{
             var email: String
             var password: String
 
@@ -57,7 +57,7 @@ class LogInActivity : AppCompatActivity() {
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(ContentValues.TAG, "createUserWithEmail:success")
+                            Log.d(TAG, "createUserWithEmail:success")
                             val user = auth.currentUser
                             Toast.makeText(
                                 baseContext,
@@ -65,12 +65,12 @@ class LogInActivity : AppCompatActivity() {
                                 Toast.LENGTH_SHORT,
                             ).show()
 
-                            val intent = Intent(this, MenuActivity::class.java)
+                            val intent = Intent(this, LogInActivity::class.java)
                             startActivity(intent)
 
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(ContentValues.TAG, "createUserWithEmail:failure", task.exception)
+                            Log.w(TAG, "createUserWithEmail:failure", task.exception)
                             Toast.makeText(
                                 baseContext,
                                 "Authentication failed.",

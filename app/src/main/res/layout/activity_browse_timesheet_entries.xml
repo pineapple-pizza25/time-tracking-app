@@ -6,26 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".BrowseTimesheetEntriesActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcvTimesheetEntries"
-        android:layout_width="300dp"
-        android:layout_height="400dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnAddNewEntry"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/tvHeading"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add New Entry"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Timesheet Entries"
+        app:layout_constraintBottom_toTopOf="@+id/cView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rcvTimesheetEntries" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -33,7 +26,7 @@
         app:layout_constraintBottom_toTopOf="@+id/rcvTimesheetEntries"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@id/tvHeading">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -70,5 +63,36 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvTimesheetEntries"
+        android:layout_width="300dp"
+        android:layout_height="400dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnAddNewEntry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add New Entry"
+        app:layout_constraintBottom_toTopOf="@id/btnMenu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rcvTimesheetEntries" />
+
+    <Button
+        android:id="@+id/btnMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAddNewEntry"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
