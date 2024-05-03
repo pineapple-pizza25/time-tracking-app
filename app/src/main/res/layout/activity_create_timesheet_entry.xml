@@ -75,26 +75,63 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvStartTime"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/btnDone"/>
+        app:layout_constraintBottom_toTopOf="@+id/btnAddImageFromGallery"/>
+
+    <Button
+        android:id="@+id/btnTakePhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Take a Photo"
+        app:layout_constraintBottom_toTopOf="@id/imageView"
+        app:layout_constraintEnd_toStartOf="@id/btnAddImageFromGallery"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvEndTime"/>
+
+
+    <Button
+        android:id="@+id/btnAddImageFromGallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Image from Gallery"
+        app:layout_constraintBottom_toTopOf="@id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnTakePhoto"
+        app:layout_constraintTop_toBottomOf="@id/tvEndTime"/>
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:srcCompat="@drawable/ic_launcher_background"
+        tools:layout_editor_absoluteX="254dp"
+        tools:layout_editor_absoluteY="463dp"
+        app:layout_constraintBottom_toTopOf="@id/btnDone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnAddImageFromGallery"/>
 
     <Button
         android:id="@+id/btnDone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Done"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnBrowseEntries"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/imageView"/>
 
     <Button
         android:id="@+id/btnBrowseEntries"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Browse Timesheet Entries"
+        android:text="Back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnDone" />
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

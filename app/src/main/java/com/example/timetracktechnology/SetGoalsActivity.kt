@@ -56,7 +56,7 @@ class SetGoalsActivity : AppCompatActivity() {
         }
 
         btnBack.setOnClickListener(){
-            val intent = Intent(this, SetMaxGoalActivity::class.java)
+            val intent = Intent(this, MenuActivity::class.java)
             startActivity(intent)
         }
     }

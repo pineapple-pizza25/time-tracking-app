@@ -23,6 +23,8 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity(), DatePickerDialog.OnD
     private lateinit var tvEndDate: TextView
     private lateinit var btnFilter: Button
     private lateinit var btnMenu: Button
+    private lateinit var tvMinDailyGoal: TextView
+    private lateinit var tvMaxDailyGoal: TextView
 
     private lateinit var timesheetEntryList: ArrayList<TimesheetEntry>
     private lateinit var filteredEntryList: ArrayList<TimesheetEntry>
@@ -43,7 +45,7 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity(), DatePickerDialog.OnD
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_browse_timesheet_entries)
 
-        val myApp = application as TimeTrackTechnology
+        var myApp = application as TimeTrackTechnology
 
         rcvEntries = findViewById<RecyclerView>(R.id.rcvTimesheetEntries)
         btnAddNewEntry = findViewById<Button>(R.id.btnAddNewEntry)
@@ -51,10 +53,29 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity(), DatePickerDialog.OnD
         btnMenu = findViewById<Button>(R.id.btnMenu)
         tvStartDate = findViewById<TextView>(R.id.tvStartDate)
         tvEndDate = findViewById<TextView>(R.id.tvEndDate)
+        tvMaxDailyGoal = findViewById<TextView>(R.id.tvMaxGoal)
+        tvMinDailyGoal = findViewById<TextView>(R.id.tvMinGoal)
 
         timesheetEntryList = myApp.getTimesheetEntryList()
 
         filteredEntryList = ArrayList<TimesheetEntry>()
+
+        myApp = application as TimeTrackTechnology
+
+        val minGoal: Int? = myApp.minDailyGoal
+        val maxGoal: Int? = myApp.maxDailyGoal
+
+        if (minGoal != null){
+            tvMinDailyGoal.text = minGoal.toString()
+        }else{
+            tvMinDailyGoal.text = "0"
+        }
+
+        if (maxGoal != null){
+            tvMaxDailyGoal.text = maxGoal.toString()
+        }else{
+            tvMaxDailyGoal.text = "0"
+        }
 
         btnAddNewEntry.setOnClickListener {
             val intent = Intent(this, CreateTimesheetEntry::class.java)
@@ -79,6 +100,10 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity(), DatePickerDialog.OnD
             val intent = Intent(this, MenuActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun getDailyGoals(){
+
     }
 
     private fun populateRecyclerView(entryList: ArrayList<TimesheetEntry>){
