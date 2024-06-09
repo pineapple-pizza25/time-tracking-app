@@ -43,7 +43,7 @@
         android:id="@+id/spnCategory"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Enter description here"
+        android:hint="Please select a category"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvCategory"

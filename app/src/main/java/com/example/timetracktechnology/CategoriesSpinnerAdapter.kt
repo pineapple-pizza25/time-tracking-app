@@ -16,6 +16,7 @@ class CategoriesSpinnerAdapter(context: Context, private val categories: ArrayLi
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
         return createViewFromResource(position, convertView, parent)
+
     }
 
     private fun createViewFromResource(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -24,7 +25,7 @@ class CategoriesSpinnerAdapter(context: Context, private val categories: ArrayLi
 
         val tvCategoryTitle = view.findViewById<TextView>(R.id.tvCategoryTitle)
 
-       tvCategoryTitle.text = category?.title
+        tvCategoryTitle.text = category?.title
 
         return view
     }

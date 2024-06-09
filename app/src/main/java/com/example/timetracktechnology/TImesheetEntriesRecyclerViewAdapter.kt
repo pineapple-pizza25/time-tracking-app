@@ -14,7 +14,10 @@ import java.io.ByteArrayOutputStream
 
 
 
-class TImesheetEntriesRecyclerViewAdapter(context: Context, private val timesheetEntriesList: ArrayList<TimesheetEntry>):
+class TImesheetEntriesRecyclerViewAdapter(
+    context: Context,
+    private val timesheetEntriesList: ArrayList<TimesheetEntry>
+):
     RecyclerView.Adapter<TImesheetEntriesRecyclerViewAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -38,7 +41,7 @@ class TImesheetEntriesRecyclerViewAdapter(context: Context, private val timeshee
         position: Int
     ) {
         holder.tvTitle.setText(timesheetEntriesList.get(position).title)
-        holder.tvCategory.setText(timesheetEntriesList.get(position).categoryId.toString())
+        holder.tvCategory.setText(timesheetEntriesList.get(position).category)
         holder.tvDate.setText(timesheetEntriesList.get(position).entryDate.toString())
         holder.tvStartTime.setText(timesheetEntriesList.get(position).startTime.toString())
         holder.tvEndTime.setText(timesheetEntriesList.get(position).endTime.toString())

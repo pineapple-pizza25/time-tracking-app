@@ -2,20 +2,27 @@ package com.example.timetracktechnology
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.ContentValues
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.YearMonth
 
 class BrowseTimesheetEntriesActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
+
+    val db = Firebase.firestore
 
     private  lateinit var btnAddNewEntry: Button
     private lateinit var rcvEntries: RecyclerView
@@ -56,7 +63,8 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity(), DatePickerDialog.OnD
         tvMaxDailyGoal = findViewById<TextView>(R.id.tvMaxGoal)
         tvMinDailyGoal = findViewById<TextView>(R.id.tvMinGoal)
 
-        timesheetEntryList = myApp.getTimesheetEntryList()
+        timesheetEntryList = ArrayList<TimesheetEntry>()
+        getEntriesFromFirestore()
 
         filteredEntryList = ArrayList<TimesheetEntry>()
 
@@ -120,7 +128,8 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity(), DatePickerDialog.OnD
 
     private fun filterEntriesByDate(startDate: LocalDate, endDate: LocalDate){
         for (entry  in timesheetEntryList){
-            if(entry.entryDate > startDate && entry.entryDate < endDate){
+            if( LocalDate.parse(entry.entryDate)  > startDate &&
+                LocalDate.parse(entry.entryDate) < endDate){
                 filteredEntryList.add(entry)
             }
         }
@@ -185,7 +194,7 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity(), DatePickerDialog.OnD
 
             getDateTimeCalendar()
             endDate = LocalDate.of(savedYear, savedMonth, savedDay)
-            tvStartDate.text = String.format("%02d/%02d/%04d", savedDay, savedMonth - 1, savedYear)
+            tvEndDate.text = String.format("%02d/%02d/%04d", savedDay, savedMonth - 1, savedYear)
 
         } else {
 
@@ -200,5 +209,21 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity(), DatePickerDialog.OnD
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         TODO("Not yet implemented")
+    }
+
+    private fun getEntriesFromFirestore(){
+        db.collection("timeSheetEntries")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    val entry = document.toObject(TimesheetEntry::class.java)
+                    timesheetEntryList.add(entry)
+
+                    populateRecyclerView(timesheetEntryList)
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w(ContentValues.TAG, "Error getting documents.", exception)
+            }
     }
 }

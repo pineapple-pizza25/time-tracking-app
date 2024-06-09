@@ -4,11 +4,15 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.DatePicker
@@ -20,22 +24,31 @@ import android.widget.TimePicker
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
-import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.LocalDate
 import java.time.YearMonth
 
-class CreateTimesheetEntry : AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+class CreateTimesheetEntry : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
+    TimePickerDialog.OnTimeSetListener {
+
+    val db = Firebase.firestore
 
     private val PERMISSION_REQUEST_CODE = 200
     private val IMAGE_SELECTION_REQUEST_CODE = 201
 
+    private lateinit var categoryList: ArrayList<Category>
+    private lateinit var categoryTitles: ArrayList<String>
+
+    /*
+    variables that temporarily store dates and times
+    before they are written to the db
+     */
     private lateinit var startTime: LocalTime
     private lateinit var endTime: LocalTime
     private lateinit var entryDate: LocalDate
@@ -76,6 +89,9 @@ class CreateTimesheetEntry : AppCompatActivity(), DatePickerDialog.OnDateSetList
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_timesheet_entry)
 
+        categoryList = ArrayList<Category>()
+        categoryTitles = ArrayList<String>()
+
         val timeTrackApp = applicationContext as TimeTrackTechnology
 
         tvTitle = findViewById<TextView>(R.id.tvTitle)
@@ -94,21 +110,36 @@ class CreateTimesheetEntry : AppCompatActivity(), DatePickerDialog.OnDateSetList
         registerResult()
         pickDateAndTime()
 
-        val categoriesAdapter = CategoriesSpinnerAdapter(
-            applicationContext,
-            timeTrackApp.getCategoryList()
-        )
+        getCategoriesFromFirestore()
 
-        spnCategory.adapter = categoriesAdapter
+        createCategoryTitleList()
 
-        fun addNewTimesheetEntry(startTime: LocalTime, endTime: LocalTime, entryDate: LocalDate, image: Bitmap?) {
+
+
+
+        /*
+        Add a new time sheet entry to firestore
+         */
+        fun addNewTimesheetEntry(startTime: LocalTime, endTime: LocalTime, entryDate: LocalDate,
+                                 image: Bitmap?) {
             val id = timeTrackApp.getTimesheetEntryId()
             val title = edtTitle.text.toString().trim()
-            val category = spnCategory.selectedItemId.toInt()
+            val categoryItem = spnCategory.selectedItem as Category
+            val category = categoryItem.title
 
             val newTimesheetEntry =
-                TimesheetEntry(id, title, category, entryDate, startTime, endTime, image)
+                TimesheetEntry(id, title, category, entryDate.toString(),
+                    startTime.toString(), endTime.toString(), image)
             timeTrackApp.addToTimesheetEntryList(newTimesheetEntry)
+
+            db.collection("timeSheetEntries")
+                .add(newTimesheetEntry)
+                .addOnSuccessListener { documentReference ->
+                    Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                }
+                .addOnFailureListener { e ->
+                    Log.w(TAG, "Error adding document", e)
+                }
         }
 
         btnDone.setOnClickListener() {
@@ -126,11 +157,11 @@ class CreateTimesheetEntry : AppCompatActivity(), DatePickerDialog.OnDateSetList
         }
 
         btnAddImageFromGallery.setOnClickListener {
-            selectImage()
+            selectImageFromGallery()
         }
 
         btnTakePhoto.setOnClickListener(){
-            pickImage()
+            cameraImage()
         }
 
         btnBrowseEntries.setOnClickListener(){
@@ -139,6 +170,9 @@ class CreateTimesheetEntry : AppCompatActivity(), DatePickerDialog.OnDateSetList
         }
     }
 
+    /*
+    sets up click listeners for date and time pickers
+     */
     @SuppressLint("SetTextI18n")
     private fun pickDateAndTime() {
         tvStartTime.setOnClickListener {
@@ -164,6 +198,10 @@ class CreateTimesheetEntry : AppCompatActivity(), DatePickerDialog.OnDateSetList
 
     }
 
+
+    /*
+    sets the click listener for the select start time textView
+     */
     private val startTimeListener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
         savedHour = hourOfDay
         savedMinute = minute
@@ -173,6 +211,9 @@ class CreateTimesheetEntry : AppCompatActivity(), DatePickerDialog.OnDateSetList
         tvStartTime.text = String.format("%02d:%02d", savedHour, savedMinute)
     }
 
+    /*
+    sets the click listener for the select end time textView
+     */
     private val endTimeListener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
         savedHour = hourOfDay
         savedMinute = minute
@@ -182,6 +223,9 @@ class CreateTimesheetEntry : AppCompatActivity(), DatePickerDialog.OnDateSetList
         tvEndTime.text = String.format("%02d:%02d", savedHour, savedMinute)
     }
 
+    /*
+    sets the click listener for the select date textView
+     */
     private val dateClickListener = DatePickerDialog.OnDateSetListener { _, year , month, day ->
         savedDay = day
         savedMonth = month + 1
@@ -218,13 +262,20 @@ class CreateTimesheetEntry : AppCompatActivity(), DatePickerDialog.OnDateSetList
         TODO("Not yet implemented")
     }
 
-    private fun selectImage() {
+
+    /*
+    Allows user to pick an image from the gallery
+     */
+    private fun selectImageFromGallery() {
         // Start image selection intent
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, IMAGE_SELECTION_REQUEST_CODE)
     }
 
+    /*
+    Handles result of selectImageFromGallery function
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IMAGE_SELECTION_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
@@ -235,11 +286,17 @@ class CreateTimesheetEntry : AppCompatActivity(), DatePickerDialog.OnDateSetList
         }
     }
 
-    private fun pickImage(){
+    /*
+    Launches camera for the user to select an image
+     */
+    private fun cameraImage(){
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         resultLauncher.launch(intent)
     }
 
+    /*
+    Does something with the selected image
+     */
     private fun registerResult(){
         resultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
@@ -256,6 +313,42 @@ class CreateTimesheetEntry : AppCompatActivity(), DatePickerDialog.OnDateSetList
                 }
             }
         )
+    }
+
+
+    /*
+    places all documents of the category collection in the db
+    into the categoryList array list
+     */
+    private fun getCategoriesFromFirestore(){
+        db.collection("categories")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    val category = document.toObject(Category::class.java)
+                    categoryList.add(category)
+                }
+
+                createCategoryTitleList()
+
+                val categoriesAdapter = CategoriesSpinnerAdapter(
+                    applicationContext,
+                    categoryList
+                )
+
+                spnCategory.adapter = categoriesAdapter
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error getting documents.", exception)
+            }
+
+
+    }
+
+    private fun createCategoryTitleList(){
+        for (category in categoryList){
+            categoryTitles.add(category.title)
+        }
     }
 }
 

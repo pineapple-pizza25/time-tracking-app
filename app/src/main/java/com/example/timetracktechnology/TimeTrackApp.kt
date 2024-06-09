@@ -32,7 +32,7 @@ class TimeTrackTechnology: Application() {
     fun getTimesheetEntryId(): Int{return timesheetEntryList.size}
 
     private fun populateCatergoryListDefaults(){
-        categoryList += Category(0,"Chores","Household tasks")
-        categoryList += Category(1,"Homework","Work to do from School/College/Work")
+        categoryList += Category(0,"Chores","Household tasks", null, null)
+        categoryList += Category(1,"Homework","Work to do from School/College/Work", null, null)
     }
 }
