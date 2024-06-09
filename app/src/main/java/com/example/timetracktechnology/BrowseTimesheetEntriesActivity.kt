@@ -36,6 +36,9 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity(), DatePickerDialog.OnD
     private lateinit var timesheetEntryList: ArrayList<TimesheetEntry>
     private lateinit var filteredEntryList: ArrayList<TimesheetEntry>
 
+    private lateinit var minGoal: MinGoal
+    private lateinit var maxGoal: MaxGoal
+
     private lateinit var startDate: LocalDate
     private lateinit var endDate: LocalDate
 
@@ -224,6 +227,54 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity(), DatePickerDialog.OnD
             }
             .addOnFailureListener { exception ->
                 Log.w(ContentValues.TAG, "Error getting documents.", exception)
+            }
+    }
+
+    private fun getMaxGoal() {
+        db.collection("maxGoal").get()
+            .addOnSuccessListener { querySnapshot ->
+                val document = querySnapshot.documents.firstOrNull()
+                if (document != null) {
+                    val goal = document.toObject(MaxGoal::class.java)
+                    if (goal != null) {
+                        Log.d(ContentValues.TAG, "Max goal retrieved: ${goal.value}")
+                        maxGoal = goal
+
+                        tvMaxDailyGoal.text = maxGoal.value.toString()
+
+                    } else {
+                        Log.d(ContentValues.TAG, "Failed to parse max goal document")
+                    }
+                } else {
+                    Log.d(ContentValues.TAG, "No max goal document found")
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.d(ContentValues.TAG, "Failed to retrieve max goal", e)
+            }
+    }
+
+    private fun getMinGoal() {
+        db.collection("minGoal").get()
+            .addOnSuccessListener { querySnapshot ->
+                val document = querySnapshot.documents.firstOrNull()
+                if (document != null) {
+                    val goal = document.toObject(MinGoal::class.java)
+                    if (goal != null) {
+                        Log.d(ContentValues.TAG, "Max goal retrieved: ${goal.value}")
+                        minGoal = goal
+
+                        tvMinDailyGoal.text = minGoal.value.toString()
+
+                    } else {
+                        Log.d(ContentValues.TAG, "Failed to parse max goal document")
+                    }
+                } else {
+                    Log.d(ContentValues.TAG, "No max goal document found")
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.d(ContentValues.TAG, "Failed to retrieve max goal", e)
             }
     }
 }

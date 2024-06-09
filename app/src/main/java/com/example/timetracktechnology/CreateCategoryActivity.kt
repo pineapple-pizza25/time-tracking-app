@@ -70,7 +70,7 @@ class CreateCategoryActivity : AppCompatActivity() {
                 toast.show()
             }
 
-       // myApp.addToCategoryList(newCategory)
+
 
     }
 
