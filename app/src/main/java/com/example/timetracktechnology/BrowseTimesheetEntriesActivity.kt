@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
+import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -32,9 +33,13 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity(), DatePickerDialog.OnD
     private lateinit var btnMenu: Button
     private lateinit var tvMinDailyGoal: TextView
     private lateinit var tvMaxDailyGoal: TextView
+    private lateinit var btnViewLineChart: Button
 
     private lateinit var timesheetEntryList: ArrayList<TimesheetEntry>
     private lateinit var filteredEntryList: ArrayList<TimesheetEntry>
+
+    private lateinit var dateList: ArrayList<LocalDate>
+    private lateinit var durationList: ArrayList<Long>
 
     private lateinit var minGoal: MinGoal
     private lateinit var maxGoal: MaxGoal
@@ -65,11 +70,15 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity(), DatePickerDialog.OnD
         tvEndDate = findViewById<TextView>(R.id.tvEndDate)
         tvMaxDailyGoal = findViewById<TextView>(R.id.tvMaxGoal)
         tvMinDailyGoal = findViewById<TextView>(R.id.tvMinGoal)
+        btnViewLineChart = findViewById(R.id.btnViewLineChart)
 
         timesheetEntryList = ArrayList<TimesheetEntry>()
         getEntriesFromFirestore()
 
         filteredEntryList = ArrayList<TimesheetEntry>()
+
+        dateList = ArrayList<LocalDate>()
+        durationList = ArrayList<Long>()
 
         myApp = application as TimeTrackTechnology
 
@@ -87,6 +96,9 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity(), DatePickerDialog.OnD
         }else{
             tvMaxDailyGoal.text = "0"
         }
+
+        getMinGoal()
+        getMaxGoal()
 
         btnAddNewEntry.setOnClickListener {
             val intent = Intent(this, CreateTimesheetEntry::class.java)
@@ -111,6 +123,15 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity(), DatePickerDialog.OnD
             val intent = Intent(this, MenuActivity::class.java)
             startActivity(intent)
         }
+
+        btnViewLineChart.setOnClickListener{
+            createArrays()
+
+            val intent = Intent(this, TotalHoursPerDayChart::class.java)
+            intent.putExtra("dates", dateList);
+            intent.putExtra("durations", durationList);
+            startActivity(intent)
+        }
     }
 
     private fun getDailyGoals(){
@@ -129,6 +150,9 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity(), DatePickerDialog.OnD
         }
     }
 
+    /*
+    filers entries
+     */
     private fun filterEntriesByDate(startDate: LocalDate, endDate: LocalDate){
         for (entry  in timesheetEntryList){
             if( LocalDate.parse(entry.entryDate)  > startDate &&
@@ -214,6 +238,10 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity(), DatePickerDialog.OnD
         TODO("Not yet implemented")
     }
 
+
+    /*
+    populate timesheetEntryList with data from db
+     */
     private fun getEntriesFromFirestore(){
         db.collection("timeSheetEntries")
             .get()
@@ -230,6 +258,9 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity(), DatePickerDialog.OnD
             }
     }
 
+    /*
+    get max goal from db
+     */
     private fun getMaxGoal() {
         db.collection("maxGoal").get()
             .addOnSuccessListener { querySnapshot ->
@@ -254,6 +285,9 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity(), DatePickerDialog.OnD
             }
     }
 
+    /*
+    get min goal from db
+     */
     private fun getMinGoal() {
         db.collection("minGoal").get()
             .addOnSuccessListener { querySnapshot ->
@@ -276,5 +310,36 @@ class BrowseTimesheetEntriesActivity : AppCompatActivity(), DatePickerDialog.OnD
             .addOnFailureListener { e ->
                 Log.d(ContentValues.TAG, "Failed to retrieve max goal", e)
             }
+    }
+
+    /*
+    method to get dates and store in array
+     */
+    private fun createArrays(){
+        if(filteredEntryList.isEmpty()){
+            return
+        }
+
+        for (entries in filteredEntryList){
+            dateList.add(LocalDate.parse(entries.entryDate))
+        }
+
+        getDuration()
+    }
+
+    /*
+    method to get duration of time spent for each day and store in an array
+     */
+    private fun getDuration(){
+        var startTime: LocalTime
+        var endTime: LocalTime
+
+        for(entries in filteredEntryList){
+            startTime = LocalTime.parse(entries.startTime)
+            endTime = LocalTime.parse(entries.endTime)
+
+            val duration: Duration = Duration.between(startTime, endTime)
+           durationList.add(duration.toHours())
+        }
     }
 }
